@@ -9,38 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var Item = (function () {
-    function Item(purchase, price, quantity) {
-        this.purchase = purchase;
-        this.price = price;
-        this.quantity = quantity;
-        this.done = false;
-    }
-    return Item;
-}());
-exports.Item = Item;
 var AppComponent = (function () {
     function AppComponent() {
-        this.items = [
-            { purchase: "Хлеб", quantity: 1, done: false, price: 15.9 },
-            { purchase: "Масло", quantity: 1, done: false, price: 60 },
-            { purchase: "Картофель", quantity: 1, done: true, price: 22.6 },
-            { purchase: "Сыр", quantity: 1, done: false, price: 310 }
-        ];
+        this.name = "Tom";
+        this.age = 24;
     }
-    AppComponent.prototype.addItem = function (text, price, quantity) {
-        if (text == null || text == undefined || text.trim() == "")
-            return;
-        if (price == null || price == undefined)
-            return;
-        if (quantity == null || quantity == undefined)
-            return;
-        this.items.push(new Item(text, price, quantity));
-    };
     AppComponent = __decorate([
         core_1.Component({
-            selector: 'sportsLease-app',
-            templateUrl: 'app/component.html'
+            selector: 'my-app',
+            template: "<child-comp [userName]=\"name\" [userAge]=\"age\"></child-comp>\n                <input type=\"number\" [(ngModel)]=\"age\" />"
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
