@@ -1,11 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { HttpService} from './http.service';
+import {Observable} from 'rxjs/Observable';
+import {User} from './user';
 
 @Component({
     selector: 'my-app',
-    template: `<child-comp [userName]="name" [userAge]="age"></child-comp>
-                <input type="number" [(ngModel)]="age" />`
+    template: `<ul>
+                    <li *ngFor="let user of users | async">
+                    <p>Имя пользователя: {{user.name}}</p>
+                    <p>Возраст пользователя: {{user.age}}</p>
+                    </li>
+                </ul>`,
+    providers: [HttpService]
 })
-export class AppComponent {
-    name:string="Tom";
-    age:number = 24;
+export class AppComponent implements OnInit {
+
+    users: Observable<User[]>;
+    constructor(private httpService: HttpService){}
+    ngOnInit(){
+
+        this.users = this.httpService.getUsers();
+    }
 }

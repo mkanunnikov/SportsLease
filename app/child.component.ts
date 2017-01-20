@@ -1,22 +1,18 @@
-import { Input, Component} from '@angular/core';
+import {Component} from "@angular/core";
 
 @Component({
     selector: 'child-comp',
-    template: `<p>Имя пользователя: {{userName}}</p>
-              <p>Возраст пользователя: {{userAge}}</p>`
+    template: `<p>{{counter}}</p>`
 })
-export class ChildComponent{
-    @Input() userName: string;
-    _userAge: number;
+export class ChildComponent {
 
-    @Input()
-    set userAge(age:number) {
-        if(age<0)
-            this._userAge=0;
-        else if(age>100)
-            this._userAge=100;
-        else
-            this._userAge = age;
+    counter: number = 0;
+
+    increment() {
+        this.counter++;
     }
-    get userAge() { return this._userAge; }
+
+    decrement() {
+        this.counter--;
+    }
 }
