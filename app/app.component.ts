@@ -3,22 +3,46 @@ import { HttpService} from './http.service';
 import {Observable} from 'rxjs/Observable';
 import {User} from './user';
 
+declare var Recorder:any;
+
 @Component({
     selector: 'my-app',
-    template: `<ul>
-                    <li *ngFor="let user of users | async">
-                    <p>Имя пользователя: {{user.name}}</p>
-                    <p>Возраст пользователя: {{user.age}}</p>
-                    </li>
-                </ul>`,
-    providers: [HttpService]
+    template: `<button (mousedown)="record()" (mouseup)="stopAndPlay()">Record</button>
+<div>{{label}}</div>
+`
 })
 export class AppComponent implements OnInit {
 
-    users: Observable<User[]>;
-    constructor(private httpService: HttpService){}
+    label:string;
     ngOnInit(){
 
-        this.users = this.httpService.getUsers();
+        Recorder.initialize({
+            swfSrc: "../recorder.swf"
+        });
+
     }
+    record(){
+        Recorder.record({
+            start: function(){
+                this.setLabel("Recording...");
+            },
+            progress: function(ms){
+                this.setLabel("Record progressed: " + ms + "ms");
+            }
+        });
+    }
+    stopAndPlay(){
+        Recorder.stop()
+        Recorder.play({
+            progress: function(ms){
+                this.setLabel("Play progressed: " + ms + "ms");
+            }
+        });
+
+    }
+
+    setLabel(message:string){
+        this.label = message;
+    }
+
 }
